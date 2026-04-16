@@ -1,9 +1,9 @@
-name: PHP Tests
+name: Tests
 
-on: [push, pull_request]
+on: [push]
 
 jobs:
-     build:
+     test:
       runs-on: ubuntu-latest
 
       steps:
@@ -12,10 +12,13 @@ jobs:
          - name: Setup PHP
            uses: shivammathur/setup-php@v2
            with:
-             php-version: '8.1'
+             php-version: 8.2
 
          - name: Install dependencies
-           run: composer install --prefer-dist --no-progress --no-suggest
+           run: composer install
 
-         - name: Run PHPUnit
-           run: vendor/bin/phpunit
+         - name: Give permission to PHPUnit
+           run: chmod +x vendor/bin/phpunit
+
+         - name: Run tests
+           run: ./vendor/bin/phpunit
